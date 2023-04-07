@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-appointments',
   templateUrl: './appointments.component.html',
   styleUrls: ['./appointments.component.scss'],
 })
-export class AppointmentsComponent {
+export class AppointmentsComponent implements OnInit {
   tables = [
     {
       name: 'Table 1',
@@ -21,20 +22,19 @@ export class AppointmentsComponent {
     },
   ];
 
-  times = [
-    {
-      time: '10:00',
-      id: 1,
-    },
-    {
-      time: '10:30',
-      id: 2,
-    },
-    {
-      time: '11:00',
-      id: 3,
-    },
-  ];
+  appointmentForm!: FormGroup;
+
+  selectedBooked: any = [];
+
+  ngOnInit(): void {
+    this.appointmentForm = new FormGroup({
+      table: new FormControl(''),
+    });
+  }
+
+  changeTable(table: any) {
+    console.log(table);
+  }
 
   selectDate(event: any) {
     console.log(event);

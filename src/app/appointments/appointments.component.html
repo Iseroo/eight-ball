@@ -1,9 +1,9 @@
 <div class="container">
   <h1>Make an Appointment</h1>
-  <form>
+  <form [formGroup]="appointmentForm">
     <mat-form-field>
       <mat-label>Select a table:</mat-label>
-      <mat-select>
+      <mat-select formControlName="table" (valueChange)="changeTable($event)">
         <mat-option *ngFor="let table of tables" [value]="table.id">
           {{ table.name }}
         </mat-option>
@@ -14,5 +14,9 @@
     <button mat-raised-button color="primary">Book Appointment</button>
   </form>
 
-  <app-item-calendar (selectDate)="selectDate($event)"> </app-item-calendar>
+  <app-item-calendar
+    (selectDate)="selectDate($event)"
+    [bookedDates]="selectedBooked"
+  >
+  </app-item-calendar>
 </div>

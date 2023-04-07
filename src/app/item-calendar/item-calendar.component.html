@@ -21,17 +21,17 @@
   [ngClass]="{ 'item-calendar--mobile': deviceType === 'mobile' }"
 >
   <div
-    *ngFor="let item of items; let i = index"
+    *ngFor="let item of weekdays; let i = index"
     class="item-calendar__block"
     [ngClass]="{
       'item-calendar__block--right-line ':
-        i !== items.length - 1 && deviceType !== 'mobile'
+        i !== weekdays.length - 1 && deviceType !== 'mobile'
     }"
   >
     <div class="item-calendar__block__header">
       <hr *ngIf="deviceType === 'mobile' && i !== 0" />
-      <p>{{ weekdays[i].name }}</p>
-      <p>{{ weekdays[i].date | date : "yyyy.MM.dd" }}</p>
+      <p>{{ item.name }}</p>
+      <p>{{ item.date | date : "yyyy.MM.dd" }}</p>
 
       <hr *ngIf="deviceType !== 'mobile'" />
     </div>
@@ -40,7 +40,8 @@
         *ngFor="let appointment of item.appointments"
         class="item-calendar__block__content-wrapper__content"
         [ngClass]="{
-          'item-calendar__block__content-wrapper__content--booked': false,
+          'item-calendar__block__content-wrapper__content--booked':
+            appointment.booked,
           'item-calendar__block__content-wrapper__content--selected':
             appointment.selected
         }"

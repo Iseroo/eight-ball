@@ -1,4 +1,10 @@
-import { Component, EventEmitter, HostBinding, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  HostBinding,
+  Input,
+  Output,
+} from '@angular/core';
 import { DeviceType, DeviceTypeService } from '../services/device-type.service';
 
 @Component({
@@ -7,9 +13,12 @@ import { DeviceType, DeviceTypeService } from '../services/device-type.service';
   styleUrls: ['./item-calendar.component.scss'],
 })
 export class ItemCalendarComponent {
-  items: any = [];
-
-  weekdays: any = [];
+  weekdays: {
+    name: string;
+    id: number;
+    date: Date;
+    appointments: { time: string; selected: boolean; booked: boolean }[];
+  }[] = [];
 
   startDate!: Date;
   disableLeft = true;
@@ -17,28 +26,24 @@ export class ItemCalendarComponent {
   @Output()
   selectDate = new EventEmitter<Date>();
 
+  booked: { times: string[]; date: Date }[] = [];
+
+  @Input()
+  set bookedDates(bookedDates: { times: string[]; date: Date }[]) {
+    console.log(bookedDates);
+
+    this.booked = bookedDates;
+    this.makeWeekdays();
+    this.checkNotAvailable();
+  }
+
   deviceType!: DeviceType;
 
   constructor(private deviceType$: DeviceTypeService) {
     this.deviceType$.subscribe((deviceType) => {
       this.deviceType = deviceType;
     });
-    for (let i = 1; i <= 7; i++) {
-      this.items.push({
-        name: `Table ${i}`,
-        id: i,
-        appointments: [
-          { time: '10:00', selected: false },
-          { time: '10:30', selected: false },
-          { time: '11:00', selected: false },
-          { time: '11:30', selected: false },
-          { time: '12:00', selected: false },
-          { time: '12:30', selected: false },
-          { time: '13:00', selected: false },
-          { time: '13:30', selected: false },
-        ],
-      });
-    }
+
     this.searchStartDate();
     this.makeWeekdays();
   }
@@ -55,6 +60,7 @@ export class ItemCalendarComponent {
     this.makeWeekdays();
     this.disableLeft = false;
     this.resetAll();
+    this.checkNotAvailable();
   }
 
   skipLeft() {
@@ -75,6 +81,7 @@ export class ItemCalendarComponent {
     this.resetAll();
     this.startDate.setDate(this.startDate.getDate() - 7);
     this.makeWeekdays();
+    this.checkNotAvailable();
     this.disableLeft = false;
   }
 
@@ -82,11 +89,22 @@ export class ItemCalendarComponent {
     this.weekdays = [];
     for (let i = 0; i < 7; i++) {
       const date = new Date(this.startDate);
+      date.setHours(0, 0, 0, 0);
       date.setDate(date.getDate() + i);
       this.weekdays.push({
         name: date.toLocaleString('default', { weekday: 'long' }),
         id: i + 1,
         date: date,
+        appointments: [
+          { time: '10:00', selected: false, booked: false },
+          { time: '10:30', selected: false, booked: false },
+          { time: '11:00', selected: false, booked: false },
+          { time: '11:30', selected: false, booked: false },
+          { time: '12:00', selected: false, booked: false },
+          { time: '12:30', selected: false, booked: false },
+          { time: '13:00', selected: false, booked: false },
+          { time: '13:30', selected: false, booked: false },
+        ],
       });
     }
   }
@@ -105,11 +123,27 @@ export class ItemCalendarComponent {
   }
 
   resetAll() {
-    this.items.forEach((item: any) => {
+    this.weekdays.forEach((item: any) => {
       item.appointments.forEach((appointment: any) => {
         appointment.selected = false;
       });
     });
+  }
+
+  checkNotAvailable() {
+    for (let appointment of this.weekdays) {
+      for (let book of this.booked) {
+        if (appointment.date.getTime() === book.date.getTime()) {
+          for (let time of book.times) {
+            for (const appointmentTime of appointment.appointments) {
+              if (appointmentTime.time === time) {
+                appointmentTime.booked = true;
+              }
+            }
+          }
+        }
+      }
+    }
   }
 
   @HostBinding('class.mb')
