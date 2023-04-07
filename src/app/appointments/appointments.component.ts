@@ -35,4 +35,8 @@ export class AppointmentsComponent {
       id: 3,
     },
   ];
+
+  selectDate(event: any) {
+    console.log(event);
+  }
 }

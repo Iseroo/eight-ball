@@ -14,5 +14,5 @@
     <button mat-raised-button color="primary">Book Appointment</button>
   </form>
 
-  <app-item-calendar> </app-item-calendar>
+  <app-item-calendar (selectDate)="selectDate($event)"> </app-item-calendar>
 </div>

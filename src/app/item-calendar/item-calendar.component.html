@@ -4,6 +4,7 @@
     mat-icon-button
     class="item-calendar__skipper-button item-calendar__skipper-button--left"
     (click)="skipLeft()"
+    [ngClass]="{ 'item-calendar__skipper-button--disabled': disableLeft }"
   >
     <mat-icon>chevron_left</mat-icon>
   </button>
@@ -39,11 +40,14 @@
         *ngFor="let appointment of item.appointments"
         class="item-calendar__block__content-wrapper__content"
         [ngClass]="{
-          'item-calendar__block__content-wrapper__content--booked': true
+          'item-calendar__block__content-wrapper__content--booked': false,
+          'item-calendar__block__content-wrapper__content--selected':
+            appointment.selected
         }"
+        (click)="selectTime(appointment, i)"
       >
         <span>
-          {{ appointment }}
+          {{ appointment.time }}
         </span>
       </div>
     </div>
