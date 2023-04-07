@@ -1,0 +1,57 @@
+.item-calendar {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+
+    &--mobile {
+        flex-direction: column;
+    }
+
+    flex-wrap: nowrap;
+    border: 1px solid #00b7cf;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #adf1db;
+    &__block {
+        padding-inline: 10px;
+        position: relative;
+        text-align: center;
+        &--right-line {
+            &::after {
+                content: "";
+                display: block;
+                width: 1px;
+                height: 100%;
+                background-color: #00b7cf;
+                margin-left: 10px;
+                top: 0;
+                right: 0;
+                position: absolute;
+            }
+        }
+
+        width: 100%;
+
+        &__content-wrapper {
+            &__content {
+                cursor: pointer;
+                margin-block: 5px;
+                &:hover {
+                    background-color: #00b7cf;
+                    color: white;
+                }
+
+                &--selected {
+                    background-color: #00b7cf;
+                    color: white;
+                }
+
+                &--booked {
+                    background-color: #860000;
+                    color: white;
+                    pointer-events: none;
+                }
+            }
+        }
+    }
+}

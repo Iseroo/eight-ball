@@ -1,0 +1,28 @@
+<mat-toolbar>
+  <span routerLink="/" style="cursor: pointer">8 Ball Pool</span>
+  <div *ngIf="deviceType === 'desktop'; else hamburger" class="menu-container">
+    <div>
+      <button mat-button routerLink="/">Kezdőlap</button>
+      <button mat-button routerLink="/appointments">Foglalás</button>
+      <button mat-button routerLink="/menu">Itallap</button>
+    </div>
+    <span class="spacer"></span>
+    <div class="float-right">
+      <button mat-button routerLink="/login" class="">Bejelentkezés</button>
+    </div>
+  </div>
+</mat-toolbar>
+<ng-template #hamburger>
+  <div class="menu-container" style="justify-content: end">
+    <button mat-icon-button (click)="isSidenavOpened = !isSidenavOpened">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+</ng-template>
+<div class="sidenav" *ngIf="isSidenavOpened && deviceType === 'mobile'">
+  <mat-nav-list>
+    <a mat-list-item routerLink="/">Kezdőlap</a>
+    <a mat-list-item routerLink="/appointments">Foglalás</a>
+    <a mat-list-item routerLink="/menu">Itallap</a>
+  </mat-nav-list>
+</div>

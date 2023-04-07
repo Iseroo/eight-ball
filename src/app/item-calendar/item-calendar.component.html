@@ -1,0 +1,51 @@
+<div>
+  <!-- Make a right and left skipper button -->
+  <button
+    mat-icon-button
+    class="item-calendar__skipper-button item-calendar__skipper-button--left"
+    (click)="skipLeft()"
+  >
+    <mat-icon>chevron_left</mat-icon>
+  </button>
+  <button
+    mat-icon-button
+    class="item-calendar__skipper-button item-calendar__skipper-button--right"
+    (click)="skipRight()"
+  >
+    <mat-icon>chevron_right</mat-icon>
+  </button>
+</div>
+<div
+  class="item-calendar"
+  [ngClass]="{ 'item-calendar--mobile': deviceType === 'mobile' }"
+>
+  <div
+    *ngFor="let item of items; let i = index"
+    class="item-calendar__block"
+    [ngClass]="{
+      'item-calendar__block--right-line ':
+        i !== items.length - 1 && deviceType !== 'mobile'
+    }"
+  >
+    <div class="item-calendar__block__header">
+      <hr *ngIf="deviceType === 'mobile' && i !== 0" />
+      <p>{{ weekdays[i].name }}</p>
+      <p>{{ weekdays[i].date | date : "yyyy.MM.dd" }}</p>
+
+      <hr *ngIf="deviceType !== 'mobile'" />
+    </div>
+    <div class="item-calendar__block__content-wrapper">
+      <div
+        *ngFor="let appointment of item.appointments"
+        class="item-calendar__block__content-wrapper__content"
+        [ngClass]="{
+          'item-calendar__block__content-wrapper__content--booked': true
+        }"
+      >
+        <span>
+          {{ appointment }}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

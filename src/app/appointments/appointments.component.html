@@ -1,0 +1,18 @@
+<div class="container">
+  <h1>Make an Appointment</h1>
+  <form>
+    <mat-form-field>
+      <mat-label>Select a table:</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let table of tables" [value]="table.id">
+          {{ table.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <br />
+    <br />
+    <button mat-raised-button color="primary">Book Appointment</button>
+  </form>
+
+  <app-item-calendar> </app-item-calendar>
+</div>
