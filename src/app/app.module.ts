@@ -46,6 +46,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { AppointmentsComponent } from './appointments/appointments.component';
 import { ItemCalendarComponent } from './item-calendar/item-calendar.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { ItemCalendarComponent } from './item-calendar/item-calendar.component';
     HomeComponent,
     AppointmentsComponent,
     ItemCalendarComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

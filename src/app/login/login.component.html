@@ -1,0 +1,103 @@
+<div class="login-container">
+  <mat-card *ngIf="showLogin; else registerForm">
+    <mat-card-header>
+      <mat-card-title>Login</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <mat-form-field>
+          <input matInput placeholder="Email" formControlName="email" />
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            matInput
+            formControlName="password"
+            [type]="hide ? 'password' : 'text'"
+          />
+          <mat-icon matSuffix (click)="hide = !hide">{{
+            hide ? "visibility_off" : "visibility"
+          }}</mat-icon>
+        </mat-form-field>
+        <br />
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="loginForm.invalid"
+        >
+          Bejelentkezés
+        </button>
+        <button mat-button color="accent" (click)="showLogin = false">
+          Register
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
+<ng-template #registerForm>
+  <mat-card class="register-card">
+    <mat-card-header>
+      <mat-card-title> Regisztáció </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="registerFormGroup" (ngSubmit)="onRegisterSubmit()">
+        <mat-form-field class="field-full-width">
+          <mat-label>Felhasználónév</mat-label>
+          <input matInput formControlName="username" />
+          <mat-error *ngIf="registerFormGroup.controls['username'].invalid"
+            >Kérlek írj be felhasználónevet.</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field class="field-full-width">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" />
+          <mat-error *ngIf="registerFormGroup.controls['email'].invalid"
+            >Kérlek írj be email címet.</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field class="field-full-width">
+          <mat-label>Jelszó</mat-label>
+          <input
+            matInput
+            formControlName="password"
+            [type]="hide ? 'password' : 'text'"
+          />
+          <mat-icon matSuffix (click)="hide = !hide">{{
+            hide ? "visibility_off" : "visibility"
+          }}</mat-icon>
+          <mat-error *ngIf="registerFormGroup.controls['password'].invalid"
+            >Kérlek írj be egy jelszavat</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field class="field-full-width">
+          <mat-label>Megerősítő jelszó</mat-label>
+          <input
+            matInput
+            formControlName="confirmPassword"
+            [type]="hide ? 'password' : 'text'"
+            (ngModelChange)="checkSamePassword()"
+          />
+          <mat-icon matSuffix (click)="hide = !hide">{{
+            hide ? "visibility_off" : "visibility"
+          }}</mat-icon>
+          <mat-error
+            *ngIf="registerFormGroup.controls['confirmPassword'].invalid"
+            >Kérlek írd be újra a jelszót.</mat-error
+          >
+        </mat-form-field>
+        <br />
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="registerFormGroup.invalid || !samePassword"
+        >
+          Register
+        </button>
+        <button mat-button color="accent" (click)="showLogin = true">
+          Login
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</ng-template>

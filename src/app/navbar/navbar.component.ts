@@ -10,12 +10,16 @@ import { DeviceType, DeviceTypeService } from '../services/device-type.service';
 export class NavbarComponent {
   deviceType!: DeviceType;
 
+  loggedIn = false;
+
   isSidenavOpened = false;
   constructor(private deviceType$: DeviceTypeService) {
     this.deviceType$.subscribe((deviceType) => {
       this.deviceType = deviceType;
     });
   }
+
+  logout() {}
 
   @HostBinding('class.mb')
   get classMb() {

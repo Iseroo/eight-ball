@@ -1,0 +1,21 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+mat-card {
+    max-width: 400px;
+    width: 100%;
+}
+
+.register-card {
+    // max-width: 400px;
+    // margin: auto;
+    // padding: 2rem;
+}
+
+.example-full-width {
+    width: 100%;
+}

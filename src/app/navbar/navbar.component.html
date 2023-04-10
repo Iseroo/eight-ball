@@ -4,11 +4,15 @@
     <div>
       <button mat-button routerLink="/">Kezdőlap</button>
       <button mat-button routerLink="/appointments">Foglalás</button>
-      <button mat-button routerLink="/menu">Itallap</button>
     </div>
     <span class="spacer"></span>
     <div class="float-right">
-      <button mat-button routerLink="/login" class="">Bejelentkezés</button>
+      <button mat-button routerLink="/login" class="" *ngIf="!loggedIn">
+        Bejelentkezés
+      </button>
+      <button mat-button (click)="logout()" class="" *ngIf="loggedIn">
+        Kijelentkezés
+      </button>
     </div>
   </div>
 </mat-toolbar>
@@ -23,6 +27,7 @@
   <mat-nav-list>
     <a mat-list-item routerLink="/">Kezdőlap</a>
     <a mat-list-item routerLink="/appointments">Foglalás</a>
-    <a mat-list-item routerLink="/menu">Itallap</a>
+    <a mat-list-item routerLink="/login" *ngIf="!loggedIn">Bejelentkezés</a>
+    <a mat-list-item (click)="logout()" *ngIf="loggedIn">Kijelentkezés</a>
   </mat-nav-list>
 </div>
