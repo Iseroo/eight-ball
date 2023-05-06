@@ -88,6 +88,7 @@ export class AppointmentsComponent implements OnInit {
     this.userDataForm.patchValue({
       name: this.userLoggedIn!.name ?? this.userLoggedIn!.username,
       phoneNumber: this.userLoggedIn!.phone,
+      email: this.userLoggedIn!.email,
     });
   }
 
