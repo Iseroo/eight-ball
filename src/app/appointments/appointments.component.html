@@ -1,22 +1,72 @@
 <div class="container">
-  <h1>Make an Appointment</h1>
-  <form [formGroup]="appointmentForm">
-    <mat-form-field>
-      <mat-label>Select a table:</mat-label>
-      <mat-select formControlName="table" (valueChange)="changeTable($event)">
-        <mat-option *ngFor="let table of tables" [value]="table.id">
-          {{ table.name }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <br />
-    <br />
-    <button mat-raised-button color="primary">Book Appointment</button>
-  </form>
+  <h1>Foglalj aszalt még ma!</h1>
+  <mat-vertical-stepper #stepper>
+    <mat-step [stepControl]="appointmentForm">
+      <ng-template matStepLabel>Asztal kiválasztása</ng-template>
+      <br />
+      <form [formGroup]="appointmentForm">
+        <mat-form-field>
+          <mat-label>Válassz asztalt:</mat-label>
+          <mat-select
+            formControlName="table"
+            (valueChange)="changeTable($event)"
+          >
+            <mat-option *ngFor="let table of tables" [value]="table.id">
+              {{ table.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <br />
+        <!-- <br />
+        <button mat-raised-button color="primary" [disabled]="!selectedDate">
+          Foglalás!
+        </button> -->
+      </form>
 
-  <app-item-calendar
-    (selectDate)="selectDate($event)"
-    [bookedDates]="selectedBooked"
-  >
-  </app-item-calendar>
+      <app-item-calendar
+        *ngIf="selectedTable"
+        (selectDate)="selectDate($event)"
+        [bookedDates]="selectedBooked"
+        (startDateEmit)="changeStartDate($event)"
+      >
+      </app-item-calendar>
+    </mat-step>
+
+    <mat-step [stepControl]="userDataForm">
+      <ng-template matStepLabel>Adatok megadása</ng-template>
+      <br />
+      <form [formGroup]="userDataForm">
+        <mat-form-field>
+          <input matInput formControlName="name" placeholder="Név" />
+        </mat-form-field>
+        <br *ngIf="!userLoggedIn" />
+        <mat-form-field *ngIf="!userLoggedIn">
+          <input
+            matInput
+            formControlName="email"
+            placeholder="Email"
+            [disabled]="userLoggedIn ? true : false"
+          />
+        </mat-form-field>
+        <br />
+        <mat-form-field>
+          <input
+            matInput
+            formControlName="phoneNumber"
+            placeholder="Telefonszám"
+          />
+        </mat-form-field>
+        <br />
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          (click)="submitAppointment()"
+          [disabled]="!validAppointment()"
+        >
+          Foglalás
+        </button>
+      </form>
+    </mat-step>
+  </mat-vertical-stepper>
 </div>

@@ -4,9 +4,9 @@ import { BehaviorSubject, map } from 'rxjs';
 
 // custom because not material defined ones
 const CustomBreakpoints = {
-  mobile: '(max-width: 800px)',
+  mobile: '(max-width: 1000px)',
 
-  desktop: '(min-width: 801px)',
+  desktop: '(min-width: 1001px)',
 } as const;
 
 type BreakpointName = keyof typeof CustomBreakpoints;

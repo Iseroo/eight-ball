@@ -1,27 +1,28 @@
 import {
+  AfterViewInit,
   Component,
   EventEmitter,
   HostBinding,
   Input,
+  OnInit,
   Output,
 } from '@angular/core';
 import { DeviceType, DeviceTypeService } from '../services/device-type.service';
+import { Weekdays } from '../interfaces/interfaces';
 
 @Component({
   selector: 'app-item-calendar',
   templateUrl: './item-calendar.component.html',
   styleUrls: ['./item-calendar.component.scss'],
 })
-export class ItemCalendarComponent {
-  weekdays: {
-    name: string;
-    id: number;
-    date: Date;
-    appointments: { time: string; selected: boolean; booked: boolean }[];
-  }[] = [];
+export class ItemCalendarComponent implements AfterViewInit {
+  weekdays: Weekdays[] = [];
 
   startDate!: Date;
   disableLeft = true;
+
+  @Output()
+  startDateEmit = new EventEmitter<Date>();
 
   @Output()
   selectDate = new EventEmitter<Date>();
@@ -53,10 +54,16 @@ export class ItemCalendarComponent {
     const day = today.getDay();
     const diff = today.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
     this.startDate = new Date(today.setDate(diff));
+    this.startDateEmit.emit(this.startDate);
+  }
+
+  ngAfterViewInit(): void {
+    this.startDateEmit.emit(this.startDate);
   }
 
   skipRight() {
     this.startDate.setDate(this.startDate.getDate() + 7);
+    this.startDateEmit.emit(this.startDate);
     this.makeWeekdays();
     this.disableLeft = false;
     this.resetAll();
@@ -80,6 +87,7 @@ export class ItemCalendarComponent {
     }
     this.resetAll();
     this.startDate.setDate(this.startDate.getDate() - 7);
+    this.startDateEmit.emit(this.startDate);
     this.makeWeekdays();
     this.checkNotAvailable();
     this.disableLeft = false;

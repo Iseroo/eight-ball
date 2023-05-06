@@ -1,0 +1,60 @@
+<div style="margin-bottom: 25px">
+  <h1>{{ user?.username }}</h1>
+  <mat-card>
+    <mat-card-content *ngIf="success !== undefined">
+      <div class="{{ 'success' + success ? '' : '--unsuccess' }}">
+        a változtatás {{ success ? "sikeres volt." : "sikertelen volt!" }}
+      </div>
+    </mat-card-content>
+  </mat-card>
+  <br />
+  <form [formGroup]="editProfile" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <input matInput placeholder="Név" formControlName="name" />
+    </mat-form-field>
+    <br />
+    <mat-form-field>
+      <input matInput placeholder="Telefonszám" formControlName="phone" />
+    </mat-form-field>
+    <br />
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="editProfile.invalid"
+    >
+      Változtatások mentése
+    </button>
+  </form>
+</div>
+
+<div class="appointments">
+  <h1>Foglalásaim</h1>
+  <p *ngIf="appointments.length === 0">Jelenleg nincs egyetlen foglalásom se</p>
+  <div class="list-holder" *ngIf="visibleList">
+    <mat-list>
+      <mat-list-item *ngFor="let item of appointments; last as last">
+        <span mat-line>{{
+          item.date.seconds * 1000 | date : "YYYY:MM:dd HH:mm"
+        }}</span>
+        <span [ngClass]="{ 'list-holder__item-divider': !last }">
+          | Asztal: {{ item.tableId }}</span
+        >
+      </mat-list-item>
+    </mat-list>
+  </div>
+</div>
+
+<button mat-raised-button color="warn" (click)="warningVisible = true">
+  Fiók törlése
+</button>
+<br />
+<br />
+<button
+  mat-raised-button
+  color="warn"
+  *ngIf="warningVisible"
+  (click)="deleteUser()"
+>
+  Biztos törölni szeretnéd?
+</button>

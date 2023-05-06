@@ -1,0 +1,28 @@
+.list-holder {
+    width: fit-content;
+    margin: 0 auto;
+
+    &__item-divider {
+        &::after {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 1px;
+            background-color: #00b7cf;
+            margin: 10px 0;
+        }
+    }
+}
+
+mat-card {
+    mat-card-content {
+        text-align: center;
+    }
+    width: max-content;
+    margin: 0 auto;
+}
+form,
+.appointments {
+    margin: auto;
+    width: max-content;
+}

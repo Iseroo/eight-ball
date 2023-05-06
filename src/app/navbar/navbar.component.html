@@ -10,6 +10,10 @@
       <button mat-button routerLink="/login" class="" *ngIf="!loggedIn">
         Bejelentkezés
       </button>
+
+      <button mat-button routerLink="/user-profile" class="" *ngIf="loggedIn">
+        Profilom
+      </button>
       <button mat-button (click)="logout()" class="" *ngIf="loggedIn">
         Kijelentkezés
       </button>
@@ -28,6 +32,7 @@
     <a mat-list-item routerLink="/">Kezdőlap</a>
     <a mat-list-item routerLink="/appointments">Foglalás</a>
     <a mat-list-item routerLink="/login" *ngIf="!loggedIn">Bejelentkezés</a>
+    <a mat-list-item routerLink="/user-profile" *ngIf="loggedIn">Profilom</a>
     <a mat-list-item (click)="logout()" *ngIf="loggedIn">Kijelentkezés</a>
   </mat-nav-list>
 </div>

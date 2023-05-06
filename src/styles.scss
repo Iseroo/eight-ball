@@ -23,5 +23,6 @@ app-root {
 
     router-outlet + * {
         flex: 1 0 auto;
+        margin-inline: 10px;
     }
 }
