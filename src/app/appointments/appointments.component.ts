@@ -172,7 +172,6 @@ export class AppointmentsComponent implements OnInit {
       .makeAppointment(this.selectedTable.name, appointment)
       .then(() => {
         this.appointmentForm.reset();
-        this.userDataForm.reset();
         this.selectedDate = undefined;
         this.selectedTable = undefined;
         this.startDate = undefined;
