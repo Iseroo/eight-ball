@@ -31,7 +31,7 @@ export class ItemCalendarComponent implements AfterViewInit {
 
   @Input()
   set bookedDates(bookedDates: { times: string[]; date: Date }[]) {
-    console.log(bookedDates);
+    // console.log(bookedDates);
 
     this.booked = bookedDates;
     this.makeWeekdays();

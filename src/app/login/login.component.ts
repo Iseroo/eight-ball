@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.loginForm.value);
+    // console.log(this.loginForm.value);
     // TODO: Add authentication logic here
     // this.userService.next(true);
     this.userService.login(
@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
         this.registerFormGroup.get('password')?.value
       )
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         let user: User = {
           UUID: res.user!.uid,
           email: this.registerFormGroup.get('email')?.value,
@@ -84,6 +84,6 @@ export class LoginComponent implements OnInit {
     this.samePassword =
       this.registerFormGroup.value.password ===
       this.registerFormGroup.value.confirmPassword;
-    console.log(this.samePassword);
+    // console.log(this.samePassword);
   }
 }

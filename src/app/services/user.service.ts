@@ -24,7 +24,7 @@ export class UserService {
     this.afAuth
       .signInWithEmailAndPassword(email, password)
       .then((res) => {
-        console.log('login');
+        // console.log('login');
         this.findUser(res.user?.uid as string);
         this.router.navigate(['/user-profile']);
       })
@@ -44,7 +44,7 @@ export class UserService {
       .subscribe((users) => {
         this.next(users[0] as User);
 
-        console.log('users', users);
+        // console.log('users', users);
       });
   }
 

@@ -80,12 +80,12 @@ export class UserProfileComponent implements OnInit {
 
   findAppointments() {
     if (!this.user) return;
-    console.log(this.user.email);
+    // console.log(this.user.email);
 
     this.appointmentService
       .getAppointmentsByUserEmail(this.user.email)
       .subscribe((appointments) => {
-        console.log(appointments);
+        // console.log(appointments);
 
         this.appointments = appointments as AppointmentFirestore[];
         if (this.appointments.length > 0) {

@@ -25,7 +25,7 @@ export class NavbarComponent {
     this.loggedIn = this.userService.user;
     this.userService.$user.subscribe((user) => {
       this.loggedIn = user;
-      console.log(this.loggedIn);
+      // console.log(this.loggedIn);
     });
   }
 
