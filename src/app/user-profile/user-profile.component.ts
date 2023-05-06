@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   Appointment,
   AppointmentFirestore,
@@ -35,7 +35,7 @@ export class UserProfileComponent implements OnInit {
   ngOnInit(): void {
     this.editProfile = this.formBuilder.group({
       name: [this.user ? this.user.name : ''],
-      phone: [this.user ? this.user.phone : ''],
+      phone: [this.user ? this.user.phone : '', Validators.pattern('[0-9]*')],
     });
     this.user = this.userService.user;
     this.userService.$user.subscribe((user) => {
