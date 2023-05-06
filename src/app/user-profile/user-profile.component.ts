@@ -13,7 +13,7 @@ import { AppointmentService } from '../services/appointment.service';
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.scss'],
 })
-export class UserProfileComponent {
+export class UserProfileComponent implements OnInit {
   appointments: AppointmentFirestore[] = [];
 
   user?: User;
@@ -30,7 +30,9 @@ export class UserProfileComponent {
     private userService: UserService,
     private formBuilder: FormBuilder,
     private appointmentService: AppointmentService
-  ) {
+  ) {}
+
+  ngOnInit(): void {
     this.editProfile = this.formBuilder.group({
       name: [this.user ? this.user.name : ''],
       phone: [this.user ? this.user.phone : ''],
@@ -39,12 +41,20 @@ export class UserProfileComponent {
     this.userService.$user.subscribe((user) => {
       this.user = user;
       if (!user) return;
-      this.editProfile.patchValue({
-        name: user!.name,
-        phone: user.phone,
-      });
-      this.findAppointments();
+      this.updateValues();
     });
+
+    if (this.user) {
+      this.updateValues();
+    }
+  }
+
+  updateValues() {
+    this.editProfile.patchValue({
+      name: this.user!.name,
+      phone: this.user!.phone,
+    });
+    this.findAppointments();
   }
 
   onSubmit() {

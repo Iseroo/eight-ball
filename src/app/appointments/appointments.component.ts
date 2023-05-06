@@ -55,21 +55,7 @@ export class AppointmentsComponent implements OnInit {
     private fb: FormBuilder,
     private appointmentService: AppointmentService,
     private _snackBar: MatSnackBar
-  ) {
-    this.userLoggedIn = this.userService.user;
-    this.userService.$user.subscribe((user) => {
-      this.userLoggedIn = user;
-      if (this.userLoggedIn && this.userDataForm) {
-        this.userDataForm
-          .get('email')
-          ?.setValidators([Validators.email, Validators.required]);
-        this.userDataForm.patchValue({
-          name: this.userLoggedIn.name ?? this.userLoggedIn.username,
-          phoneNumber: this.userLoggedIn.phone,
-        });
-      }
-    });
-  }
+  ) {}
 
   ngOnInit(): void {
     this.appointmentForm = new FormGroup({
@@ -80,6 +66,28 @@ export class AppointmentsComponent implements OnInit {
       name: ['', [Validators.required]],
       email: ['', [Validators.email]],
       phoneNumber: ['', [Validators.pattern('[0-9]*'), Validators.required]],
+    });
+
+    this.userLoggedIn = this.userService.user;
+    this.userService.$user.subscribe((user) => {
+      this.userLoggedIn = user;
+      if (this.userLoggedIn && this.userDataForm) {
+        this.updateValues();
+      }
+    });
+
+    if (this.userLoggedIn) {
+      this.updateValues();
+    }
+  }
+
+  updateValues() {
+    this.userDataForm
+      .get('email')
+      ?.setValidators([Validators.email, Validators.required]);
+    this.userDataForm.patchValue({
+      name: this.userLoggedIn!.name ?? this.userLoggedIn!.username,
+      phoneNumber: this.userLoggedIn!.phone,
     });
   }
 
